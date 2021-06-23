@@ -21,8 +21,11 @@ const YoutubeForm = () => {
         phNumbers: ['']
     }
 
-    const onSubmit = values => {
+    const onSubmit = (values, onSubmitProps) => {
         console.log('Form form ', values)
+        console.log('Submit props', onSubmitProps)
+        //enable submit btn again
+        onSubmitProps.setSubmitting(false)
     }
 
     const validationSchema = Yup.object({
@@ -185,7 +188,7 @@ const YoutubeForm = () => {
                         </button>
                         <button
                             type='submit'
-                            disabled={!(formik.dirty && formik.isValid)}
+                            disabled={!formik.isValid || formik.isSubmitting}
                         >
                             Submit
                         </button>
@@ -225,3 +228,6 @@ export default YoutubeForm
 //2 Form submission in progress
 
 //dirty is false as soon as form data change from initial load it will become true
+
+//2 Form submission in progress
+//isSubmitting is false is errors
