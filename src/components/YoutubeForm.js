@@ -63,10 +63,10 @@ const YoutubeForm = () => {
             initialValues={formValues || initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
-        // validateOnChange={false}
-        // validateOnBlur={false}
-        // validateOnMount
-        enableReinitialize
+            // validateOnChange={false}
+            // validateOnBlur={false}
+            // validateOnMount
+            enableReinitialize
         >
 
             {/* //manually triggering validation for checking if username exist or not */}
@@ -246,3 +246,7 @@ export default YoutubeForm
 
 //2 Form submission in progress
 //isSubmitting is false is errors
+
+
+//loadData  useCase if ypu  havr a previously filled form and want want your user to get the form data again ie previously filled form
+//select dropDown from an API nad then show indicator that API call is done update the state variable with response and when it is done render the formik component again
