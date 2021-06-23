@@ -30,14 +30,14 @@ const YoutubeForm = () => {
         email: Yup.string().email('Invalid email format!').required('Required!'),
         channel: Yup.string().required('Required!')
     })
-//possible usecase render your fields based upon the json that has been fetched from an api call
+    //possible usecase render your fields based upon the json that has been fetched from an api call
     const validateComments = value => {
         let error
         if (!value) {
-          error = 'Required'
+            error = 'Required'
         }
         return error
-      }
+    }
 
     return (
         // <Formic initialValue={initialValue} validationSchema={validationSchema} onSubmit={onSubmit}
@@ -46,112 +46,152 @@ const YoutubeForm = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
-            // validateOnChange={false}
-            // validateOnBlur={false}
-            >
-            
-            {/*  <form onSubmit={formik.handleSubmit}=====<Form */}
-            <Form>
+        // validateOnChange={false}
+        // validateOnBlur={false}
+        >
 
-                <div className="form-control ">
-                    <label htmlFor='name'>Name</label>
-                    <Field type='text' id='name' name='name'
-                    />
-                    <ErrorMessage name='name' component={TextError} />
-                </div>
+            {formik => {
+                console.log('Formik props', formik)
+                {/*  <form onSubmit={formik.handleSubmit}=====<Form */ }
+                return (<Form>
 
-                <div className="form-control ">
-                    <label htmlFor='email'>E-mail</label>
-                    <Field type='email' id='email' name='email'
-                    />
-                    <ErrorMessage name='email' >
-                        {error => <div className='error'>{error}</div>}
-                    </ErrorMessage>
-                </div>
-                <div className="form-control ">
-                    <label htmlFor='channel'>Channel</label>
-                    <Field type='text' id='channel' name='channel'
-                    />
-                    <ErrorMessage name='channel' component={TextError} />
-                </div>
+                    <div className="form-control ">
+                        <label htmlFor='name'>Name</label>
+                        <Field type='text' id='name' name='name'
+                        />
+                        <ErrorMessage name='name' component={TextError} />
+                    </div>
 
-                <div className="form-control">
-                    <label htmlFor="comments">Comment</label>
-                    <Field as='textarea' id='comments' name='comments' validate={validateComments}/>
-                    <ErrorMessage name='comments' component={TextError}/>
-                </div>
+                    <div className="form-control ">
+                        <label htmlFor='email'>E-mail</label>
+                        <Field type='email' id='email' name='email'
+                        />
+                        <ErrorMessage name='email' >
+                            {error => <div className='error'>{error}</div>}
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-control ">
+                        <label htmlFor='channel'>Channel</label>
+                        <Field type='text' id='channel' name='channel'
+                        />
+                        <ErrorMessage name='channel' component={TextError} />
+                    </div>
 
-                <div className="form-control">
-                    <label htmlFor="address">Address</label>
-                    <Field name='address'>
-                        {/* //using function as children to the component */}
-                        {
-                            (props) => {
-                                // console.log('Props ',props)
-                                const { field, form, meta } = props
-                                // this input isnot hooked to the formik in any way
-                                return <div>
-                                    <input type='text' id="address" {...field} />
-                                    {meta.touched && meta.error ? <div>{meta.error}</div> : null}
-                                </div>
+                    <div className="form-control">
+                        <label htmlFor="comments">Comment</label>
+                        <Field as='textarea' id='comments' name='comments' validate={validateComments} />
+                        <ErrorMessage name='comments' component={TextError} />
+                    </div>
+
+                    <div className="form-control">
+                        <label htmlFor="address">Address</label>
+                        <Field name='address'>
+                            {/* //using function as children to the component */}
+                            {
+                                (props) => {
+                                    // console.log('Props ',props)
+                                    const { field, form, meta } = props
+                                    // this input isnot hooked to the formik in any way
+                                    return <div>
+                                        <input type='text' id="address" {...field} />
+                                        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+                                    </div>
+                                }
                             }
-                        }
-                    </Field>
+                        </Field>
 
-                </div>
+                    </div>
 
-                <div className="form-control">
-                    <label htmlFor="facebook">Facebook Profile</label>
-                    <Field type='text' id='facebook' name='social.facebook'></Field>
-                </div>
+                    <div className="form-control">
+                        <label htmlFor="facebook">Facebook Profile</label>
+                        <Field type='text' id='facebook' name='social.facebook'></Field>
+                    </div>
 
-                <div className="form-control">
-                    <label htmlFor="twitter">Twitter Profile</label>
-                    <Field type='text' id='twitter' name='social.twitter'></Field>
-                </div>
+                    <div className="form-control">
+                        <label htmlFor="twitter">Twitter Profile</label>
+                        <Field type='text' id='twitter' name='social.twitter'></Field>
+                    </div>
 
-                <div className='form-control'>
-                    <label htmlFor='primaryPh'>Primary phone number</label>
-                    <Field type='text' id='primaryPh' name='phoneNumbers[0]' />
-                </div>
+                    <div className='form-control'>
+                        <label htmlFor='primaryPh'>Primary phone number</label>
+                        <Field type='text' id='primaryPh' name='phoneNumbers[0]' />
+                    </div>
 
-                <div className='form-control'>
-                    <label htmlFor='secondaryPh'>Secondary phone number</label>
-                    <Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
-                </div>v
-                <button type="submit">Sumit</button>
+                    <div className='form-control'>
+                        <label htmlFor='secondaryPh'>Secondary phone number</label>
+                        <Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
+                    </div>
+                    <button type="submit">Sumit</button>
 
 
-                <div className='form-control'>
-                    <label>List of phone numbers</label>
-                    <FieldArray name='phNumbers'>
-                        {fieldArrayProps => {
-                            const { push, remove, form } = fieldArrayProps
-                            const { values } = form
-                            const { phNumbers } = values
-                            // console.log('fieldArrayProps', fieldArrayProps)
-                            // console.log('Form errors', form.errors)
-                            return (
-                                <div>
-                                    {phNumbers.map((phNumber, index) => (
-                                        <div key={index}>
-                                            <Field name={`phNumbers[${index}]`} />
-                                            {index > 0 && (
-                                                <button type='button' onClick={() => remove(index)}>
-                                                    -
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))}
-                                    <button type='button' onClick={() => push('')}>
-                                        +
-                                    </button>
-                                </div>
-                            )
-                        }}
-                    </FieldArray>
-                </div>
-            </Form>
+                    <div className='form-control'>
+                        <label>List of phone numbers</label>
+                        <FieldArray name='phNumbers'>
+                            {fieldArrayProps => {
+                                const { push, remove, form } = fieldArrayProps
+                                const { values } = form
+                                const { phNumbers } = values
+                                // console.log('fieldArrayProps', fieldArrayProps)
+                                // console.log('Form errors', form.errors)
+                                return (
+                                    <div>
+                                        {phNumbers.map((phNumber, index) => (
+                                            <div key={index}>
+                                                <Field name={`phNumbers[${index}]`} />
+                                                {index > 0 && (
+                                                    <button type='button' onClick={() => remove(index)}>
+                                                        {' '} - {' '}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                        <button type='button' onClick={() => push('')}>
+                                            {' '}   + {' '}
+                                        </button>
+                                    </div>
+                                )
+                            }}
+                        </FieldArray>
+
+                        <button
+              type='button'
+              onClick={() => formik.validateField('comments')}
+            >
+              Validate comments
+            </button>
+            <button
+              type='button'
+              onClick={() => formik.setFieldTouched('comments')}
+            >
+              Visit comments
+            </button>
+            <button type='button' onClick={() => formik.validateForm()}>
+              Validate all
+            </button>
+            <button
+              type='button'
+              onClick={() =>
+                formik.setTouched({
+                  name: true,
+                  email: true,
+                  channel: true,
+                  comments: true
+                })
+              }
+            >
+              Visit all
+            </button> 
+                        <button
+                            type='submit'
+                          
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </Form>
+
+                )
+            }}
 
 
 
