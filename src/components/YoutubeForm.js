@@ -30,6 +30,14 @@ const YoutubeForm = () => {
         email: Yup.string().email('Invalid email format!').required('Required!'),
         channel: Yup.string().required('Required!')
     })
+//possible usecase render your fields based upon the json that has been fetched from an api call
+    const validateComments = value => {
+        let error
+        if (!value) {
+          error = 'Required'
+        }
+        return error
+      }
 
     return (
         // <Formic initialValue={initialValue} validationSchema={validationSchema} onSubmit={onSubmit}
@@ -38,7 +46,10 @@ const YoutubeForm = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
-            validateOnChange={false}>
+            // validateOnChange={false}
+            // validateOnBlur={false}
+            >
+            
             {/*  <form onSubmit={formik.handleSubmit}=====<Form */}
             <Form>
 
@@ -66,7 +77,8 @@ const YoutubeForm = () => {
 
                 <div className="form-control">
                     <label htmlFor="comments">Comment</label>
-                    <Field as='textarea' id='comments' name='comments'></Field>
+                    <Field as='textarea' id='comments' name='comments' validate={validateComments}/>
+                    <ErrorMessage name='comments' component={TextError}/>
                 </div>
 
                 <div className="form-control">
