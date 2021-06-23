@@ -1,10 +1,11 @@
 import React from 'react'
 //takes object as its parameter
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import * as Yup from 'yup';
 import TextError from './TextError'
 const YoutubeForm = () => {
 
+    //see diff between Field and FastField
 
     const initialValues = {
         name: 'Diksha',
@@ -17,6 +18,7 @@ const YoutubeForm = () => {
             twitter: '',
         },
         phoneNumbers: ['', ''],
+        phNumbers: ['']
     }
 
     const onSubmit = values => {
@@ -32,7 +34,11 @@ const YoutubeForm = () => {
     return (
         // <Formic initialValue={initialValue} validationSchema={validationSchema} onSubmit={onSubmit}
         //behaves as contextprovider to all three input field
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            validateOnChange={false}>
             {/*  <form onSubmit={formik.handleSubmit}=====<Form */}
             <Form>
 
@@ -102,6 +108,37 @@ const YoutubeForm = () => {
                     <Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
                 </div>v
                 <button type="submit">Sumit</button>
+
+
+                <div className='form-control'>
+                    <label>List of phone numbers</label>
+                    <FieldArray name='phNumbers'>
+                        {fieldArrayProps => {
+                            const { push, remove, form } = fieldArrayProps
+                            const { values } = form
+                            const { phNumbers } = values
+                            // console.log('fieldArrayProps', fieldArrayProps)
+                            // console.log('Form errors', form.errors)
+                            return (
+                                <div>
+                                    {phNumbers.map((phNumber, index) => (
+                                        <div key={index}>
+                                            <Field name={`phNumbers[${index}]`} />
+                                            {index > 0 && (
+                                                <button type='button' onClick={() => remove(index)}>
+                                                    -
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+                                    <button type='button' onClick={() => push('')}>
+                                        +
+                                    </button>
+                                </div>
+                            )
+                        }}
+                    </FieldArray>
+                </div>
             </Form>
 
 
@@ -116,3 +153,15 @@ export default YoutubeForm
 // 1 hooked up input to the top level Formic component 
 //2  it uses name attribute to match up the formic state
 //3 by default  it will render an input element which is what our youtube form had as well(ie it will hook ip to the onBlur onChange and value of the form field)
+
+
+
+
+
+
+
+//when the error runs
+//1 onChange   to stop // validateOnChange={false}
+
+//2 when we blurr out  to stop // validateOnBlur={false}
+//3 when Submit
