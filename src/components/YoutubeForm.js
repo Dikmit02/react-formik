@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 //takes object as its parameter
 import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import * as Yup from 'yup';
@@ -16,6 +16,20 @@ const YoutubeForm = () => {
         social: {
             facebook: '',
             twitter: '',
+        },
+        phoneNumbers: ['', ''],
+        phNumbers: ['']
+    }
+
+    const savedValues = {
+        name: 'Vishwas',
+        email: 'v@example.com',
+        channel: 'codevolution',
+        comments: 'Welcome to Formik',
+        address: '221B Baker Street',
+        social: {
+            facebook: '',
+            twitter: ''
         },
         phoneNumbers: ['', ''],
         phNumbers: ['']
@@ -41,17 +55,18 @@ const YoutubeForm = () => {
         }
         return error
     }
-
+    const [formValues, setFormValues] = useState(null)
     return (
         // <Formic initialValue={initialValue} validationSchema={validationSchema} onSubmit={onSubmit}
         //behaves as contextprovider to all three input field
         <Formik
-            initialValues={initialValues}
+            initialValues={formValues || initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         // validateOnChange={false}
         // validateOnBlur={false}
         // validateOnMount
+        enableReinitialize
         >
 
             {/* //manually triggering validation for checking if username exist or not */}
@@ -126,9 +141,6 @@ const YoutubeForm = () => {
                         <label htmlFor='secondaryPh'>Secondary phone number</label>
                         <Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
                     </div>
-                    <button type="submit">Sumit</button>
-
-
                     <div className='form-control'>
                         <label>List of phone numbers</label>
                         <FieldArray name='phNumbers'>
@@ -185,6 +197,9 @@ const YoutubeForm = () => {
                             }
                         >
                             Visit all
+                        </button>
+                        <button type='button' onClick={() => setFormValues(savedValues)}>
+                            Load saved data
                         </button>
                         <button
                             type='submit'
