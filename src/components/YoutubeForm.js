@@ -50,6 +50,7 @@ const YoutubeForm = () => {
         // validateOnBlur={false}
         >
 
+            {/* //manually triggering validation for checking if username exist or not */}
             {formik => {
                 console.log('Formik props', formik)
                 {/*  <form onSubmit={formik.handleSubmit}=====<Form */ }
@@ -154,36 +155,36 @@ const YoutubeForm = () => {
                         </FieldArray>
 
                         <button
-              type='button'
-              onClick={() => formik.validateField('comments')}
-            >
-              Validate comments
-            </button>
-            <button
-              type='button'
-              onClick={() => formik.setFieldTouched('comments')}
-            >
-              Visit comments
-            </button>
-            <button type='button' onClick={() => formik.validateForm()}>
-              Validate all
-            </button>
-            <button
-              type='button'
-              onClick={() =>
-                formik.setTouched({
-                  name: true,
-                  email: true,
-                  channel: true,
-                  comments: true
-                })
-              }
-            >
-              Visit all
-            </button> 
+                            type='button'
+                            onClick={() => formik.validateField('comments')}
+                        >
+                            Validate comments
+                        </button>
+                        <button
+                            type='button'
+                            onClick={() => formik.setFieldTouched('comments')}
+                        >
+                            Visit comments
+                        </button>
+                        <button type='button' onClick={() => formik.validateForm()}>
+                            Validate all
+                        </button>
+                        <button
+                            type='button'
+                            onClick={() =>
+                                formik.setTouched({
+                                    name: true,
+                                    email: true,
+                                    channel: true,
+                                    comments: true
+                                })
+                            }
+                        >
+                            Visit all
+                        </button>
                         <button
                             type='submit'
-                          
+
                         >
                             Submit
                         </button>
