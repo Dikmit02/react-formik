@@ -48,6 +48,7 @@ const YoutubeForm = () => {
             onSubmit={onSubmit}
         // validateOnChange={false}
         // validateOnBlur={false}
+        // validateOnMount
         >
 
             {/* //manually triggering validation for checking if username exist or not */}
@@ -184,7 +185,7 @@ const YoutubeForm = () => {
                         </button>
                         <button
                             type='submit'
-
+                            disabled={!(formik.dirty && formik.isValid)}
                         >
                             Submit
                         </button>
@@ -218,3 +219,9 @@ export default YoutubeForm
 
 //2 when we blurr out  to stop // validateOnBlur={false}
 //3 when Submit
+
+//disabling Submit button in 2 scenarios
+//1 validaing of form state   //isValid true errors empty vice versa
+//2 Form submission in progress
+
+//dirty is false as soon as form data change from initial load it will become true
